@@ -1,3 +1,4 @@
+using System;
 using ConnectFour.Game;
 using ConnectFour.Utils;
 
@@ -12,6 +13,10 @@ namespace ConnectFour.UI
             _board = board;
         }
 
+        /// <summary>
+        /// Prompt the user to choose a column [1-7].
+        /// Does not clear the board here; just shows prompt and handles invalid input inline.
+        /// </summary>
         public int ReadColumnInput(string prompt)
         {
             int column;
@@ -22,12 +27,14 @@ namespace ConnectFour.UI
 
                 if (input != null && Validator.IsValidColumn(input, out column))
                 {
+                    // Convert 1-based to 0-based index
                     return column - 1;
                 }
                 else
                 {
-                    ClearMessages();
+                    // Invalid input: show message but do not clear the board.
                     Console.WriteLine("Invalid input. Please enter a number between 1 and 7.");
+                    // Next iteration will reprint the prompt.
                 }
             }
         }
@@ -53,10 +60,15 @@ namespace ConnectFour.UI
             return input == "1";
         }
 
+        /// <summary>
+        /// If you have code elsewhere calling this, it will clear & redraw the board.
+        /// But for ReadColumnInput, we removed ClearMessages to avoid clearing mid-input.
+        /// You may keep or remove this method if unused.
+        /// </summary>
         public void ClearMessages()
         {
             Console.Clear();
             _board.Display();
         }
-  }
+    }
 }

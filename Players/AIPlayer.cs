@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using ConnectFour.UI;
 using ConnectFour.Game;  // needed for Board
 
 namespace ConnectFour.Players
@@ -17,6 +19,8 @@ namespace ConnectFour.Players
 
         public override int GetMove()
         {
+            ConsoleUI.AddMessage("Computer playing...");
+            Thread.Sleep(1000); // fake brainstorm 1sec
             char opponentSymbol = (Symbol == 'X') ? 'O' : 'X';
 
             // 1) If AI can win next move, play it
